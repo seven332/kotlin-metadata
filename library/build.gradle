@@ -89,6 +89,16 @@ task installProtobuf(type: Copy, dependsOn: downloadProtobuf) {
 }
 
 task execProtobuf(dependsOn: installProtobuf) {
+    inputs.files {
+        "$proto_path/metadata.proto"
+        "$proto_path/builtins.proto"
+    }
+
+    outputs.files {
+        "$proto_out/org/jetbrains/kotlin/metadata/ProtoBuf.java"
+        "$proto_out/org/jetbrains/kotlin/metadata/builtins/BuiltInsProtoBuf.java"
+    }
+
     doLast {
         // Protobuf can't create output dir
         File outDir = file(proto_out)
